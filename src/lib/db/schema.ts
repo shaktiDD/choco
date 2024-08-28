@@ -1,4 +1,5 @@
 
+import { table } from "console";
 import { create } from "domain";
 import { sql } from "drizzle-orm";
 import { pgTable, serial,varchar,text,timestamp, integer,index  } from "drizzle-orm/pg-core";
@@ -38,4 +39,19 @@ export const warehouses = pgTable("warehouses",{
     return{
         pincodeIdx : index("pincode_idx",).on(table.pincode)
     }
+})
+
+export const orders = pgTable("orders",{
+    id:serial("id").primaryKey(),
+
+})
+
+export const deliveryPersons = pgTable("delivery_persons",{
+    id:serial("id").primaryKey(),
+    name:varchar("name",{length:100}).notNull(),
+    phone:varchar("phone",{length:10}).notNull(),
+    warehouseId:integer("warehouse_id").references(()=>warehouses.id,{onDelete:"cascade"}),
+    orderId:integer("order_id").references(()=>orders.id,{onDelete:"set null"}),
+    upDatedAt:timestamp('upDate_at').default(sql`CURRENT_TIMESTAMP`),
+    createdAt:timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
 })
