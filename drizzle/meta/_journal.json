@@ -15,6 +15,20 @@
       "when": 1724740697545,
       "tag": "0001_nostalgic_titania",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724819087424,
+      "tag": "0002_silly_toro",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1724819214718,
+      "tag": "0003_first_lily_hollister",
+      "breakpoints": true
     }
   ]
 }
