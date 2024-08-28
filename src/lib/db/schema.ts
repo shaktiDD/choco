@@ -62,7 +62,7 @@ export const inventory = pgTable("inventory",{
     sku:varchar("sku",{length:8}).unique().notNull(),
     orderId:integer("order_id").references(()=>orders.id,{onDelete:"set null"}),
     warehouseId:integer("warehouse_id").references(()=>warehouses.id,{onDelete:"cascade"}),
-    produceId:integer("product_id").references(()=>products.id,{onDelete:"cascade"}),
+    productId:integer("product_id").references(()=>products.id,{onDelete:"cascade"}),
     upDatedAt:timestamp('upDate_at').default(sql`CURRENT_TIMESTAMP`),
     createdAt:timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
 })
