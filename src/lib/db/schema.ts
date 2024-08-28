@@ -2,6 +2,7 @@
 import { table } from "console";
 import { create } from "domain";
 import { sql } from "drizzle-orm";
+import { unique } from "drizzle-orm/mysql-core";
 import { pgTable, serial,varchar,text,timestamp, integer,index  } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users",{
@@ -52,6 +53,16 @@ export const deliveryPersons = pgTable("delivery_persons",{
     phone:varchar("phone",{length:10}).notNull(),
     warehouseId:integer("warehouse_id").references(()=>warehouses.id,{onDelete:"cascade"}),
     orderId:integer("order_id").references(()=>orders.id,{onDelete:"set null"}),
+    upDatedAt:timestamp('upDate_at').default(sql`CURRENT_TIMESTAMP`),
+    createdAt:timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
+})
+
+export const inventory = pgTable("inventory",{
+    id:serial("id").primaryKey(),
+    sku:varchar("sku",{length:8}).unique().notNull(),
+    orderId:integer("order_id").references(()=>orders.id,{onDelete:"set null"}),
+    warehouseId:integer("warehouse_id").references(()=>warehouses.id,{onDelete:"cascade"}),
+    produceId:integer("product_id").references(()=>products.id,{onDelete:"cascade"}),
     upDatedAt:timestamp('upDate_at').default(sql`CURRENT_TIMESTAMP`),
     createdAt:timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
 })
