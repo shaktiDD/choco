@@ -4,7 +4,7 @@ import { writeFile } from "node:fs/promises";
 import { db } from "@/lib/db/db";
 import  fs  from "fs";
 import path from "path";
-import { log } from "node:console";
+import { desc } from "drizzle-orm";
 
 export async function POST(req: Request) {
     const data = await req.formData();
@@ -48,4 +48,13 @@ export async function POST(req: Request) {
     }
 
     return Response.json({ message: "Product stored successfully" }, { status: 201 });
+}
+
+export async function GET(req: Request) {
+    try{
+        const allProducts = await db.select().from(products).orderBy(desc(products.id));
+        return Response.json(allProducts);
+    }catch(err){
+        return Response.json({message: err}, {status: 500})
+    }
 }
